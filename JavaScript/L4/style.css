@@ -1,0 +1,70 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #f4f4f4;
+}
+
+#app {
+    max-width: 800px;
+    margin: auto;
+    background: white;
+    padding: 20px;
+    box-shadow: 0 0 10px #ccc;
+}
+
+#noteForm input, #noteForm textarea, #searchInput {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+#noteForm button {
+    background-color: #5cb85c;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+}
+
+.note {
+    border: 1px solid #ddd;
+    margin-bottom: 10px;
+    padding: 10px;
+    position: relative;
+}
+
+.note.pinned {
+    background-color: #ffeb3b;
+}
+
+.note-title {
+    font-size: 1.2em;
+    margin: 0;
+}
+
+.note-content {
+    margin-top: 5px;
+}
+
+.note-tags {
+    font-style: italic;
+    color: #555;
+}
+
+.note-footer {
+    text-align: right;
+}
+
+.delete-btn, .edit-btn {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.edit-btn {
+    background-color: #2196f3;
+}

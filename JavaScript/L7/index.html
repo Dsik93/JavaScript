@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Poruszające się kulki</title>
+<style>
+  /* Stylizacja strony */
+  body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f0f0f0;
+  }
+  /* Stylizacja kanwy */
+  canvas {
+    border: 1px solid black;
+  }
+  /* Stylizacja kontrolek */
+  .controls {
+    margin-bottom: 10px;
+  }
+</style>
+</head>
+<body>
+
+<div class="controls">
+  <!-- Pole do ustawienia liczby kulek (X) -->
+  <label for="numBalls">Liczba kulek (X): </label>
+  <input type="number" id="numBalls" value="10">
+  <!-- Pole do ustawienia odległości (Y) -->
+  <label for="distance">Odległość (Y): </label>
+  <input type="number" id="distance" value="100">
+  <!-- Przycisk do rozpoczęcia animacji -->
+  <button id="startButton">Start</button>
+  <!-- Przycisk do resetowania animacji -->
+  <button id="resetButton">Reset</button>
+</div>
+
+<!-- Kanwa do rysowania kulek -->
+<canvas id="canvas"></canvas>
+
+<script src="script.js"></script>
+</body>
+</html>

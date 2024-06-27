@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ball in the Hole</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+        }
+        #gameCanvas {
+            background: #f0f0f0;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="gameCanvas"></canvas>
+
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const context = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        let ball = {
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            radius: 20,
+            color: 'blue',
+            speed: 5
+        };
+
+        let hole = {
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            radius: 30,
+            color: 'black'
+        };
+
+        let startTime, endTime;
+        let keys = {};
+
+        function drawBall() {
+            context.beginPath();
+            context.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
+            context.fillStyle = ball.color;
+            context.fill();
+            context.closePath();
+        }
+
+        function drawHole() {
+            context.beginPath();
+            context.arc(hole.x, hole.y, hole.radius, 0, Math.PI * 2);
+            context.fillStyle = hole.color;
+            context.fill();
+            context.closePath();
+        }
+
+        function clearCanvas() {
+            context.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        function detectCollision() {
+            const dx = ball.x - hole.x;
+            const dy = ball.y - hole.y;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+
+            if (distance < ball.radius + hole.radius) {
+                endTime = new Date().getTime();
+                alert(`Hole in one! Time: ${(endTime - startTime) / 1000} seconds`);
+                startTime = new Date().getTime();
+                resetGame();
+            }
+        }
+
+        function resetGame() {
+            ball.x = Math.random() * canvas.width;
+            ball.y = Math.random() * canvas.height;
+            hole.x = Math.random() * canvas.width;
+            hole.y = Math.random() * canvas.height;
+        }
+
+        window.addEventListener('deviceorientation', (event) => {
+            let tiltX = event.beta;
+            let tiltY = event.gamma;
+
+            ball.x += tiltY;
+            ball.y += tiltX;
+
+            if (ball.x < ball.radius) ball.x = ball.radius;
+            if (ball.x > canvas.width - ball.radius) ball.x = canvas.width - ball.radius;
+            if (ball.y < ball.radius) ball.y = ball.radius;
+            if (ball.y > canvas.height - ball.radius) ball.y = canvas.height - ball.radius;
+
+            detectCollision();
+        });
+
+        window.addEventListener('keydown', (event) => {
+            keys[event.key] = true;
+        });
+
+        window.addEventListener('keyup', (event) => {
+            keys[event.key] = false;
+        });
+
+        function moveBall() {
+            if (keys['ArrowUp']) ball.y -= ball.speed;
+            if (keys['ArrowDown']) ball.y += ball.speed;
+            if (keys['ArrowLeft']) ball.x -= ball.speed;
+            if (keys['ArrowRight']) ball.x += ball.speed;
+
+            if (ball.x < ball.radius) ball.x = ball.radius;
+            if (ball.x > canvas.width - ball.radius) ball.x = canvas.width - ball.radius;
+            if (ball.y < ball.radius) ball.y = ball.radius;
+            if (ball.y > canvas.height - ball.radius) ball.y = canvas.height - ball.radius;
+        }
+
+        function animate() {
+            clearCanvas();
+            drawBall();
+            drawHole();
+            moveBall();
+            detectCollision();
+            requestAnimationFrame(animate);
+        }
+
+        startTime = new Date().getTime();
+        animate();
+    </script>
+</body>
+</html>
